@@ -17,7 +17,7 @@ def main(name, roll_no, room_no, form_id, default_option):
     :return:
     """
     form_url = "https://docs.google.com/forms/d/e/"+form_id+"/formResponse"
-
+    print(form_url)
     sess = requests.Session()
     resp = sess.get(form_url)
     # print(resp.status_code)
@@ -83,6 +83,8 @@ def main(name, roll_no, room_no, form_id, default_option):
                 entry_dict['entry.'+each] = room_no
             else:
                 entry_dict['entry.'+each] = default_option
+
+    print(entry_dict)
 
     requests.post(form_url, data=entry_dict, headers=user_agent)
     return True
