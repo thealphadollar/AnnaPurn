@@ -5,13 +5,15 @@ import json
 
 LOG = getLogger(__name__)
 
-def main(name="test", roll_no="test", room_no="test", form_id="test"):
+
+def main(name, roll_no, room_no, form_id, default_option):
     """
 
     :param name:
     :param roll_no:
     :param room_no:
     :param form_id:
+    :param default_option:
     :return:
     """
     form_url = "https://docs.google.com/forms/d/e/"+form_id+"/formResponse"
@@ -77,18 +79,21 @@ def main(name="test", roll_no="test", room_no="test", form_id="test"):
                 entry_dict['entry.'+each] = name
             elif count == 2:
                 entry_dict['entry.'+each] = roll_no
-            # elif count == 3:
-            #     entry_dict['entry.'+each] = room_no
+            elif count == 3:
+                entry_dict['entry.'+each] = room_no
             else:
-                entry_dict['entry.'+each] = 0
+                entry_dict['entry.'+each] = default_option
 
     requests.post(form_url, data=entry_dict, headers=user_agent)
+    return True
+
 
 if __name__ == "__main__":
     name = input("Enter your name: ")
     roll_no = input("Enter your roll no: ")
     room_no = input("Enter your room no: ")
     form_id = input("Enter the form ID: ")
+    default_option = input("Enter the option you want to mark: ")
 
-    main(name, roll_no, room_no, form_id)
+    main(name, roll_no, room_no, form_id, default_option)
     # main()
